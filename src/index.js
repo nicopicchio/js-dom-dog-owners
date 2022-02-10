@@ -1,7 +1,7 @@
 const dogsList = document.querySelector(".dogs-list")
 const main = document.querySelector(".main")
 const noDogsMessage = document.querySelector(".dog-section__no-dogs")
-const plusBtn = document.getElementsByClassName("dogs-list__button dogs-list__button--add")
+const plusBtn = document.querySelector(".dogs-list__button--add")
 
 const goodDog = "Good dog!"
 const badDog = "Bad dog!"
@@ -24,28 +24,34 @@ function renderForm() {
     form.setAttribute("class", "form")
     const nameLabel = document.createElement("label")
     nameLabel.setAttribute("for", "name")
-    nameLabel.innerText("Dog's name")
+    nameLabel.innerText = "Dog's name"
     const nameInput = document.createElement("input")
     nameInput.setAttribute("type", "text")
     nameInput.setAttribute("id", "name")
     nameInput.setAttribute("name", "name")
     const imgLabel = document.createElement("label")
     imgLabel.setAttribute("for", "image")
-    imgLabel.innerText("Dog's picture")
+    imgLabel.innerText = "Dog's picture"
     const imgInput = document.createElement("input")
     imgInput.setAttribute("type", "url")
     imgInput.setAttribute("id", "image")
     imgInput.setAttribute("name", "image")
     const bioLabel = document.createElement("label")
     bioLabel.setAttribute("for", "bio")
-    bioLabel.innerText("Dog's bio")
+    bioLabel.innerText = "Dog's bio"
     const textArea = document.createElement("textarea")
     textArea.setAttribute("rows", "5")
     textArea.setAttribute("id", "bio")
     textArea.setAttribute("name", "bio")
+    const submitButton = document.createElement("input")
+    submitButton.setAttribute("type", "submit")
+    submitButton.setAttribute("id", "submit")
+    submitButton.setAttribute("name", "submit")
+    submitButton.setAttribute("value", "Let's add a dog!")
+    submitButton.setAttribute("class", "form__button")
     main.append(formSection)
     formSection.append(addDogName, form)
-    form.append(nameLabel, nameInput, imgLabel, imgInput, bioLabel, textArea)
+    form.append(nameLabel, nameInput, imgLabel, imgInput, bioLabel, textArea, submitButton)
 }
 
 function renderTopList(array) {
@@ -62,7 +68,7 @@ function renderTopList(array) {
 }
 
 renderTopList(data)
-
+addDog()
 
 function renderCard(element) {
     const card = document.createElement("section")
@@ -85,10 +91,10 @@ function renderCard(element) {
     const emElement = document.createElement("em")
     emElement.innerText = "Is naughty?"
     if (dogBehaviourChecker(element)) {
-        pEl.innerText = yes
+        pEl.innerText = no
         btnEl.innerText = goodDog
     } else {
-        pEl.innerText = no
+        pEl.innerText = yes
         btnEl.innerText = badDog
     }
     main.append(card)
