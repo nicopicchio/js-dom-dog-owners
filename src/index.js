@@ -128,11 +128,13 @@ function renderCard(element) {
         btnEl.innerText = badDog
     }
     btnEl.addEventListener("click", function() {
-        if (dogBehaviourChecker(element)) {
+        if (element.isGoodDog) {
+            element.isGoodDog = false
             pEl.innerText = yes
             pEl.prepend(emElement)
             btnEl.innerText = badDog
         } else {
+            element.isGoodDog = true
             pEl.innerText = no
             pEl.prepend(emElement)
             btnEl.innerText = goodDog
