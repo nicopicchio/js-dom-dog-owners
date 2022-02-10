@@ -118,7 +118,7 @@ function renderCard(element) {
     const btnEl = document.createElement("button")
     const emElement = document.createElement("em")
     emElement.innerText = "Is naughty?"
-    if (element.isGoodDog) {
+    if (dogBehaviourChecker(element)) {
         pEl.innerText = no
         pEl.prepend(emElement)
         btnEl.innerText = goodDog
@@ -127,6 +127,17 @@ function renderCard(element) {
         pEl.prepend(emElement)
         btnEl.innerText = badDog
     }
+    btnEl.addEventListener("click", function() {
+        if (dogBehaviourChecker(element)) {
+            pEl.innerText = yes
+            pEl.prepend(emElement)
+            btnEl.innerText = badDog
+        } else {
+            pEl.innerText = no
+            pEl.prepend(emElement)
+            btnEl.innerText = goodDog
+        }
+    })
     main.append(card)
     card.append(dogName, dogImg, descriptionDiv, btnDiv)
     descriptionDiv.append(h3Bio, pBio)
@@ -146,4 +157,8 @@ function clearMain() {
     for (const child of children) {
         child.remove()
     }
+}
+
+function dogBehaviourChecker(element) {
+    return element.isGoodDog
 }
