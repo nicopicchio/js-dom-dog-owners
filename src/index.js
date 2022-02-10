@@ -57,7 +57,7 @@ function createNewForm() {
 
 function captureFormData() {
     const form = document.querySelector(".form")
-    let newDog
+    let newDog = {}
     form.addEventListener("submit", function(event) {
         event.preventDefault()
         const dogNameInput = document.querySelector("#name").value
