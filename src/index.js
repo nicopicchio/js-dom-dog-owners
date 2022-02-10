@@ -8,14 +8,15 @@ const badDog = "Bad dog!"
 const yes = "Yes!"
 const no = "No!"
 
-function addDog() {
+function renderForm() {
     plusBtn.addEventListener("click", function() {
         clearMain()
-        renderForm()
+        createNewForm()
+        captureFormData()
     })
 }
 
-function renderForm() {
+function createNewForm() {
     const formSection = document.createElement("section")
     formSection.setAttribute("class", "main__dog-section")
     const addDogName = document.createElement("h2")
@@ -54,7 +55,34 @@ function renderForm() {
     form.append(nameLabel, nameInput, imgLabel, imgInput, bioLabel, textArea, submitButton)
 }
 
+function captureFormData() {
+    const form = document.querySelector(".form")
+    let newDog
+    form.addEventListener("submit", function(event) {
+        event.preventDefault()
+        const dogNameInput = document.querySelector("#name").value
+        const dogImage = document.querySelector("#image").value
+        const textareaInput = document.querySelector("#bio").value
+        if (dogNameInput.length === 0) return
+        newDog = {
+            id: data.length+1,
+            name: dogNameInput,
+            bio: textareaInput,
+            isGoodDog: true,
+            image: dogImage
+        }
+        addNewDogToTopList(newDog)
+    })
+    return newDog
+}
+
+function addNewDogToTopList(formData) {
+    data.unshift(formData)
+    renderTopList(data)
+}
+
 function renderTopList(array) {
+    clearTopList()
     for (const element of array) {
         const liElement = document.createElement("li");
         liElement.setAttribute("class", "dogs-list__button")
@@ -68,7 +96,7 @@ function renderTopList(array) {
 }
 
 renderTopList(data)
-addDog()
+renderForm()
 
 function renderCard(element) {
     const card = document.createElement("section")
@@ -78,8 +106,8 @@ function renderCard(element) {
     const dogImg = document.createElement("img")
     dogImg.setAttribute("src", element.image)
     dogImg.setAttribute("height", "400px") //
-    const desciptionDiv = document.createElement("div")
-    desciptionDiv.setAttribute("class", "main__dog-section__desc")
+    const descriptionDiv = document.createElement("div")
+    descriptionDiv.setAttribute("class", "main__dog-section__desc")
     const h3Bio = document.createElement("h3")
     h3Bio.innerText = "Bio"
     const pBio = document.createElement("p")
@@ -90,18 +118,27 @@ function renderCard(element) {
     const btnEl = document.createElement("button")
     const emElement = document.createElement("em")
     emElement.innerText = "Is naughty?"
-    if (dogBehaviourChecker(element)) {
+    if (element.isGoodDog) {
         pEl.innerText = no
+        pEl.prepend(emElement)
         btnEl.innerText = goodDog
     } else {
         pEl.innerText = yes
+        pEl.prepend(emElement)
         btnEl.innerText = badDog
     }
     main.append(card)
-    card.append(dogName, dogImg, desciptionDiv, btnDiv)
-    desciptionDiv.append(h3Bio, pBio)
-    pEl.prepend(emElement)
+    card.append(dogName, dogImg, descriptionDiv, btnDiv)
+    descriptionDiv.append(h3Bio, pBio)
     btnDiv.append(pEl, btnEl)
+}
+
+function clearTopList() {
+    const dogsListchildren = Array.from(dogsList.children)
+    for (const dogsListchild of dogsListchildren) {
+        if (dogsListchild !== plusBtn)
+        dogsListchild.remove()
+    }
 }
 
 function clearMain() {
@@ -109,8 +146,4 @@ function clearMain() {
     for (const child of children) {
         child.remove()
     }
-}
-
-function dogBehaviourChecker(element) {
-    return element.isGoodDog === true
 }
